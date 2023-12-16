@@ -1,0 +1,20 @@
+{
+    "extends": ["@diplodoc/eslint-config"],
+    "root": true,
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "overrides": [
+        {
+            "files": ["src/plugin/**/*"],
+            "env": {
+                "node": true
+            }
+        }
+    ],
+    "rules": {
+        "no-implicit-globals": "off"
+    }
+}
