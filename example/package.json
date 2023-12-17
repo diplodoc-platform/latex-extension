@@ -1,0 +1,12 @@
+{
+  "name": "@diplodoc/latex-extension-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node . 1> build/index.html; open build/index.html"
+  },
+  "dependencies": {
+    "@diplodoc/latex-extension": "*",
+    "@diplodoc/transform": "*"
+  }
+}
