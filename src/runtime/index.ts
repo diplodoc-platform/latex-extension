@@ -1,6 +1,8 @@
 import type {ExposedAPI} from '../types';
 import katex from 'katex';
 
+import 'katex/dist/katex.css';
+
 const jsonp = (window.latexJsonp = window.latexJsonp || []);
 const queue = jsonp.splice(0, jsonp.length);
 const attr = (element: Element, name: string) => decodeURIComponent(element.getAttribute(name) || '');

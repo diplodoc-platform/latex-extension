@@ -4,7 +4,6 @@ import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
 import type {KatexOptions} from 'katex';
 import MarkdownIt from 'markdown-it';
-import katex from 'katex';
 import {copy, dynrequire, hidden} from './utils';
 
 // Assumes that there is a "$" at state.src[pos]
@@ -196,14 +195,23 @@ const registerTransforms = (
                 env.meta.style = env.meta.style || [];
                 env.meta.style.push(runtime.style);
 
-                if (bundle) {
-                    const {join} = dynrequire('node:path');
-                    const file = join(PACKAGE, 'runtime');
-                    if (!env.bundled.has(file)) {
-                        env.bundled.add(file);
+                if (bundle && !env.bundled.has(PACKAGE)) {
+                    const {dirname, join} = dynrequire('node:path');
 
-                        copy(require.resolve(file), join(output, runtime));
-                    }
+                    env.bundled.add(PACKAGE);
+
+                    const root = dirname(require.resolve(join(PACKAGE, 'runtime')));
+
+                    RUNTIME.forEach((file) => {
+                        switch (true) {
+                            case file === 'index.js':
+                                return copy(join(root, file), join(output, runtime.script));
+                            case file === 'index.css':
+                                return copy(join(root, file), join(output, runtime.style));
+                            default:
+                                return copy(join(root, file), join(output, dirname(runtime.script), file));
+                        }
+                    });
                 }
             }
 
@@ -231,10 +239,10 @@ export type PluginOptions = {
 export function transform(options: Partial<PluginOptions> = {}) {
     const {
         runtime = {
-            script: '_assets/katex-extension.js',
-            style: '_assets/katex-extension.css',
+            script: '_assets/latex-extension.js',
+            style: '_assets/latex-extension.css',
         },
-        classes = 'yfm-katex',
+        classes = 'yfm-latex',
         bundle = true,
         validate = true,
         katexOptions = {},
@@ -250,7 +258,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             };
 
             if (validate) {
-                katex.renderToString(content, {
+                dynrequire('katex').renderToString(content, {
                     ...options,
                     throwOnError: true,
                 });
