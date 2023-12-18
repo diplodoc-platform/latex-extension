@@ -5,7 +5,8 @@ import 'katex/dist/katex.css';
 
 const jsonp = (window.latexJsonp = window.latexJsonp || []);
 const queue = jsonp.splice(0, jsonp.length);
-const attr = (element: Element, name: string) => decodeURIComponent(element.getAttribute(name) || '');
+const attr = (element: Element, name: string) =>
+    decodeURIComponent(element.getAttribute(name) || '');
 
 jsonp.push = function (...args) {
     args.forEach((callback) => {
@@ -36,19 +37,26 @@ function identity(content: string) {
 async function call(callback: Callback): Promise<void> {
     await lock(() =>
         callback({
-            run: async ({querySelector = '.yfm-latex', nodes, sanitize = identity, ...rest} = {}) => {
+            run: async ({
+                querySelector = '.yfm-latex',
+                nodes,
+                sanitize = identity,
+                ...rest
+            } = {}) => {
                 const nodesList: Element[] = Array.from(
                     nodes || document.querySelectorAll(querySelector),
                 );
 
                 for (const element of nodesList) {
-                    const content = attr(element,'data-content');
+                    const content = attr(element, 'data-content');
                     const options = JSON.parse(attr(element, 'data-options') || '{}');
 
-                    element.innerHTML = sanitize(katex.renderToString(content, {
-                        ...options,
-                        ...rest,
-                    }));
+                    element.innerHTML = sanitize(
+                        katex.renderToString(content, {
+                            ...options,
+                            ...rest,
+                        }),
+                    );
                 }
             },
         } as ExposedAPI),

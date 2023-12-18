@@ -1,7 +1,8 @@
 import type {RunOptions} from '../types';
-import {useEffect, useState, useCallback} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 export type RuntimeOptions = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError?: (error: any) => void;
 };
 

@@ -1,4 +1,7 @@
-import type {MarkdownItPluginCb, MarkdownItPluginOpts} from '@diplodoc/transform/lib/plugins/typings';
+import type {
+    MarkdownItPluginCb,
+    MarkdownItPluginOpts,
+} from '@diplodoc/transform/lib/plugins/typings';
 import type {RuleBlock} from 'markdown-it/lib/parser_block';
 import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
@@ -180,6 +183,7 @@ const registerTransforms = (
     },
 ) => {
     function applyTransforms<T extends RuleBlock | RuleInline>(match: T): T {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return ((state: Parameters<T>[0], ...args: any[]) => {
             const {env} = state;
 
@@ -209,7 +213,10 @@ const registerTransforms = (
                             case file === 'index.css':
                                 return copy(join(root, file), join(output, runtime.style));
                             default:
-                                return copy(join(root, file), join(output, dirname(runtime.script), file));
+                                return copy(
+                                    join(root, file),
+                                    join(output, dirname(runtime.script), file),
+                                );
                         }
                     });
                 }
@@ -233,10 +240,12 @@ export type NormalizedPluginOptions = Omit<PluginOptions, 'runtime'> & {
 };
 
 export type PluginOptions = {
-    runtime: string | {
-        script: string;
-        style: string;
-    };
+    runtime:
+        | string
+        | {
+              script: string;
+              style: string;
+          };
     bundle: boolean;
     validate: boolean;
     classes: string;
@@ -248,20 +257,19 @@ type InputOptions = MarkdownItPluginOpts & {
 };
 
 export function transform(options: Partial<PluginOptions> = {}) {
-    const {
-        classes = 'yfm-latex',
-        bundle = true,
-        validate = true,
-        katexOptions = {},
-    } = options;
+    const {classes = 'yfm-latex', bundle = true, validate = true, katexOptions = {}} = options;
 
     if (bundle && typeof options.runtime === 'string') {
         throw new TypeError('Option `runtime` should be record when `bundle` is enabled.');
     }
 
-    const runtime = typeof options.runtime === 'string'
-        ? {script: options.runtime, style: options.runtime}
-        : options.runtime || {script: '_assets/latex-extension.js', style: '_assets/latex-extension.css'};
+    const runtime =
+        typeof options.runtime === 'string'
+            ? {script: options.runtime, style: options.runtime}
+            : options.runtime || {
+                  script: '_assets/latex-extension.js',
+                  style: '_assets/latex-extension.css',
+              };
 
     const render =
         (tag: 'span' | 'p', displayMode: boolean): RenderRule =>
@@ -298,7 +306,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
 
     Object.assign(plugin, {
         collect(input: string, {destRoot = '.'}: InputOptions) {
-            const MdIt = dynrequire('markdown-it')
+            const MdIt = dynrequire('markdown-it');
             const md = new MdIt().use((md: MarkdownIt) => {
                 registerTransforms(md, {
                     runtime,

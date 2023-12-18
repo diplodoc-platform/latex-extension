@@ -8,13 +8,14 @@
     },
     "overrides": [
         {
-            "files": ["src/plugin/**/*"],
+            "files": ["src/plugin/**/*", "esbuild/**/*"],
             "env": {
                 "node": true
             }
         }
     ],
     "rules": {
-        "no-implicit-globals": "off"
+        "no-implicit-globals": "off",
+        "consistent-return": "off"
     }
 }

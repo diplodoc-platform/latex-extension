@@ -45,9 +45,10 @@ const common = {
         external: ['markdown-it', 'node:*'],
         define: {
             PACKAGE: JSON.stringify(require('../package.json').name),
-            RUNTIME: JSON.stringify(Object.keys(runtime.metafile.outputs)
-                .filter(file => !file.match(/\.map$/))
-                .map(file => file.replace(/^runtime\//, ''))
+            RUNTIME: JSON.stringify(
+                Object.keys(runtime.metafile.outputs)
+                    .filter((file) => !file.match(/\.map$/))
+                    .map((file) => file.replace(/^runtime\//, '')),
             ),
         },
     });
