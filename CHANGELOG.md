@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.0...v1.0.1) (2023-12-18)
+
+
+### Bug Fixes
+
+* Downgrade markdown-it peer dep ([f898076](https://github.com/diplodoc-platform/latex-extension/commit/f8980765ce0148c3ba1715405e18aeca28c3071b))
+
 ## 1.0.0 (2023-12-18)
 
 
