@@ -120,8 +120,8 @@ Configuration:
   **Default**:
   ```json
   {
-    script: '_assets/latex-extension.js',
-    style: '_assets/latex-extension.css'
+    "script": "_assets/latex-extension.js",
+    "style": "_assets/latex-extension.css"
   }
   ```
 

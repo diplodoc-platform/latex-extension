@@ -8,6 +8,7 @@
     ".": "./plugin/index.js",
     "./plugin": "./plugin/index.js",
     "./runtime": "./runtime/index.js",
+    "./runtime/styles": "./runtime/index.css",
     "./react": "./react/index.js",
     "./hooks": "./react/index.js"
   },
