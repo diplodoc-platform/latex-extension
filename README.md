@@ -1,5 +1,7 @@
 # Diplodoc Latex extension
 
+[![NPM version](https://img.shields.io/npm/v/@diplodoc/latex-extension.svg?style=flat)](https://www.npmjs.org/package/@diplodoc/latex-extension)
+
 This is extension for Diplodoc platform which adds support for Latex syntax using [katex](https://katex.org/) library.
 
 Extension contains some parts:
