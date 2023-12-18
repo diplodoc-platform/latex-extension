@@ -19,7 +19,7 @@
     "lint:fix": "eslint --fix ."
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "files": [
     "plugin",
     "runtime",
