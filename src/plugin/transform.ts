@@ -1,9 +1,9 @@
-import type {MarkdownItPluginCb} from '@diplodoc/transform/lib/plugins/typings';
+import type {MarkdownItPluginCb, MarkdownItPluginOpts} from '@diplodoc/transform/lib/plugins/typings';
 import type {RuleBlock} from 'markdown-it/lib/parser_block';
 import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
 import type {KatexOptions} from 'katex';
-import MarkdownIt from 'markdown-it';
+import type MarkdownIt from 'markdown-it';
 import {copy, dynrequire, hidden} from './utils';
 
 // Assumes that there is a "$" at state.src[pos]
@@ -243,6 +243,10 @@ export type PluginOptions = {
     katexOptions: KatexOptions;
 };
 
+type InputOptions = MarkdownItPluginOpts & {
+    destRoot: string;
+};
+
 export function transform(options: Partial<PluginOptions> = {}) {
     const {
         classes = 'yfm-latex',
@@ -291,6 +295,21 @@ export function transform(options: Partial<PluginOptions> = {}) {
         md.renderer.rules.math_inline = render('span', false);
         md.renderer.rules.math_block = render('p', true);
     };
+
+    Object.assign(plugin, {
+        collect(input: string, {destRoot = '.'}: InputOptions) {
+            const MdIt = dynrequire('markdown-it')
+            const md = new MdIt().use((md: MarkdownIt) => {
+                registerTransforms(md, {
+                    runtime,
+                    bundle,
+                    output: destRoot,
+                });
+            });
+
+            md.parse(input, {});
+        },
+    });
 
     return plugin;
 }
