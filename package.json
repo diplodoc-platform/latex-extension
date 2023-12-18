@@ -1,7 +1,7 @@
 {
   "name": "@diplodoc/latex-extension",
   "version": "0.0.1",
-  "description": "",
+  "description": "Extension for Diplodoc platform which adds support for Latex syntax using Katex",
   "main": "plugin/index.js",
   "types": "plugin/index.d.ts",
   "exports": {
