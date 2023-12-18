@@ -175,7 +175,7 @@ const registerTransforms = (
         runtime,
         bundle,
         output,
-    }: Pick<PluginOptions, 'bundle' | 'runtime'> & {
+    }: Pick<NormalizedPluginOptions, 'bundle' | 'runtime'> & {
         output: string;
     },
 ) => {
@@ -225,28 +225,39 @@ const registerTransforms = (
     });
 };
 
-export type PluginOptions = {
+export type NormalizedPluginOptions = Omit<PluginOptions, 'runtime'> & {
     runtime: {
         script: string;
         style: string;
     };
-    classes: string;
+};
+
+export type PluginOptions = {
+    runtime: string | {
+        script: string;
+        style: string;
+    };
     bundle: boolean;
     validate: boolean;
+    classes: string;
     katexOptions: KatexOptions;
 };
 
 export function transform(options: Partial<PluginOptions> = {}) {
     const {
-        runtime = {
-            script: '_assets/latex-extension.js',
-            style: '_assets/latex-extension.css',
-        },
         classes = 'yfm-latex',
         bundle = true,
         validate = true,
         katexOptions = {},
     } = options;
+
+    if (bundle && typeof options.runtime === 'string') {
+        throw new TypeError('Option `runtime` should be record when `bundle` is enabled.');
+    }
+
+    const runtime = typeof options.runtime === 'string'
+        ? {script: options.runtime, style: options.runtime}
+        : options.runtime || {script: '_assets/latex-extension.js', style: '_assets/latex-extension.css'};
 
     const render =
         (tag: 'span' | 'p', displayMode: boolean): RenderRule =>
