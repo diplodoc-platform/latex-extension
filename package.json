@@ -16,6 +16,7 @@
     "build": "run-p build:*",
     "build:js": "./esbuild/build.js",
     "build:declarations": "tsc --emitDeclarationOnly --outDir .",
+    "prepublishOnly": "npm run build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "exit 0"
