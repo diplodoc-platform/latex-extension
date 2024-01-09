@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.2...v1.0.3) (2024-01-09)
+
+
+### Bug Fixes
+
+* Add missed katex peer dep ([fbe3992](https://github.com/diplodoc-platform/latex-extension/commit/fbe3992932be2ee97ed93baa55d67bab2262fd80))
+* Fix build ([e883b23](https://github.com/diplodoc-platform/latex-extension/commit/e883b230aedee72e04960c8dbecdcf1d0c3a0b07))
+
 ## [1.0.2](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.1...v1.0.2) (2023-12-21)
 
 
