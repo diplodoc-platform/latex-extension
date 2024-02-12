@@ -283,7 +283,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             if (validate) {
                 dynrequire('katex').renderToString(content, {
                     ...options,
-                    throwOnError: true,
+                    throwOnError: false,
                 });
             }
 
