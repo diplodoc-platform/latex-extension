@@ -35,6 +35,7 @@
     "@diplodoc/tsconfig": "^1.0.2",
     "@types/katex": "^0.16.7",
     "@types/markdown-it": "^13.0.7",
+    "@types/node": "^20.11.17",
     "@types/react": "^18.2.45",
     "esbuild": "^0.19.9",
     "esbuild-inline-sass": "^0.4.3",
@@ -46,8 +47,8 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "markdown-it": "^13.0.0",
     "katex": "^0.16.9",
+    "markdown-it": "^13.0.0",
     "react": "^18.2.0"
   },
   "peerDependenciesMeta": {
