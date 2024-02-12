@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/diplodoc-platform/latex-extension/compare/v1.1.0...v1.1.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* add types ([9a05114](https://github.com/diplodoc-platform/latex-extension/commit/9a05114c601cb6040fa220b9a38bafd864734a94))
+
 ## [1.1.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.3...v1.1.0) (2024-02-12)
 
 
