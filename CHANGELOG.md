@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.3...v1.1.0) (2024-02-12)
+
+
+### Features
+
+* disable errors on build ([f9143a0](https://github.com/diplodoc-platform/latex-extension/commit/f9143a01eec66fe9042205f191f62f3b4256e42e))
+
 ## [1.0.3](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.2...v1.0.3) (2024-01-09)
 
 
