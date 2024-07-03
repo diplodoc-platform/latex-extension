@@ -3,7 +3,7 @@ import latex from '@diplodoc/latex-extension';
 import {readFile} from 'node:fs/promises';
 
 (async () => {
-    const content = await readFile('./Readme.md', 'utf8');
+    const content = await readFile('./README.md', 'utf8');
     const {result} = await transform(content, {
         output: './build',
         plugins: [latex.transform()],
