@@ -42,7 +42,7 @@ Add latex runtime to your final page
         <!-- Read more about '_assets/latex-extension.js' in 'MarkdownIt transform plugin' section -->
         <script src="_assets/latex-extension.js" async />
         <script>
-            // Read more about 'latexJsonp' in 'Prepared Mermaid runtime' section
+            // Read more about 'latexJsonp' in 'Prepared Katex runtime' section
             window.latexJsonp = window.latexJsonp || [];
             window.latexJsonp.push((latex) => {
                 window.addEventListener('load', function() {
