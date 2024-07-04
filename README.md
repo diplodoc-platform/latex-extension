@@ -10,6 +10,11 @@ Extension contains some parts:
 - [React hook and component for smart control of Katex](#react-hook-and-component-for-smart-control-of-katex)
 
 ## Quickstart
+Install the package
+```bash
+npm install --save @diplodoc/latex-extension
+```
+
 Attach plugin to transformer
 
 ```js
