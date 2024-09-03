@@ -29,8 +29,6 @@
     "react"
   ],
   "devDependencies": {
-    "@diplodoc/eslint-config": "^2.0.0",
-    "@diplodoc/prettier-config": "^2.0.0",
     "@diplodoc/transform": "^4.7.1",
     "@diplodoc/tsconfig": "^1.0.2",
     "@types/katex": "^0.16.7",
@@ -42,7 +40,6 @@
     "katex": "^0.16.9",
     "markdown-it": "^13.0.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "typescript": "^5.3.3"
   },
