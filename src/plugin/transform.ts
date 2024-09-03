@@ -7,6 +7,7 @@ import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
 import type {KatexOptions} from 'katex';
 import type MarkdownIt from 'markdown-it';
+
 import {copy, dynrequire, hidden} from './utils';
 
 // Assumes that there is a "$" at state.src[pos]

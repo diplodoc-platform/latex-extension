@@ -41,5 +41,6 @@ import {readFile} from 'node:fs/promises';
 </html>
     `;
 
+    // eslint-disable-next-line no-console
     console.log(html);
 })();

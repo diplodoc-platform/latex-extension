@@ -1,6 +1,6 @@
 import type {ExposedAPI} from '../types';
-import katex from 'katex';
 
+import katex from 'katex';
 import 'katex/dist/katex.css';
 
 const jsonp = (window.latexJsonp = window.latexJsonp || []);
