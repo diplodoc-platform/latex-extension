@@ -33,7 +33,7 @@
     "@diplodoc/transform": "^4.7.1",
     "@diplodoc/tsconfig": "^1.0.2",
     "@types/katex": "^0.16.7",
-    "@types/markdown-it": "^13.0.7",
+    "@types/markdown-it": "^13.0.9",
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.45",
     "esbuild": "^0.19.9",
