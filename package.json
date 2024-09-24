@@ -36,7 +36,7 @@
     "@types/markdown-it": "^13.0.9",
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.45",
-    "esbuild": "^0.19.9",
+    "esbuild": "^0.23.1",
     "esbuild-inline-sass": "^0.4.3",
     "katex": "^0.16.9",
     "markdown-it": "^13.0.2",
