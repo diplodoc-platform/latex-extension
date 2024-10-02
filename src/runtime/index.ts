@@ -51,6 +51,9 @@ async function call(callback: Callback): Promise<void> {
                     const content = attr(element, 'data-content');
                     const options = JSON.parse(attr(element, 'data-options') || '{}');
 
+                    delete options.strict;
+                    delete options.trust;
+
                     element.innerHTML = sanitize(
                         katex.renderToString(content, {
                             ...options,
