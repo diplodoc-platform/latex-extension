@@ -41,6 +41,8 @@ async function call(callback: Callback): Promise<void> {
                 querySelector = '.yfm-latex',
                 nodes,
                 sanitize = identity,
+                strict = 'warn',
+                trust = false,
                 ...rest
             } = {}) => {
                 const nodesList: Element[] = Array.from(
@@ -51,12 +53,11 @@ async function call(callback: Callback): Promise<void> {
                     const content = attr(element, 'data-content');
                     const options = JSON.parse(attr(element, 'data-options') || '{}');
 
-                    delete options.strict;
-                    delete options.trust;
-
                     element.innerHTML = sanitize(
                         katex.renderToString(content, {
                             ...options,
+                            strict,
+                            trust,
                             ...rest,
                         }),
                     );
