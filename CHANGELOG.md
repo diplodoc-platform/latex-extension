@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.1.0...v1.2.0) (2024-10-03)
+
+
+### Features
+
+* edit katex options ([202e1f8](https://github.com/diplodoc-platform/latex-extension/commit/202e1f806f6b9ef7d35701f066ce86ca81bc7ed5))
+
+
+### Bug Fixes
+
+* add types ([9a05114](https://github.com/diplodoc-platform/latex-extension/commit/9a05114c601cb6040fa220b9a38bafd864734a94))
+* Change artifacts placement ([e6c7cab](https://github.com/diplodoc-platform/latex-extension/commit/e6c7cab614330d4edcede5530b7bdbfbd2d1e626))
+
 ## [1.1.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.0.3...v1.1.0) (2024-02-12)
 
 
