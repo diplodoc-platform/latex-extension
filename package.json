@@ -5,12 +5,34 @@
   "main": "build/plugin/index.js",
   "types": "build/plugin/index.d.ts",
   "exports": {
-    ".": "./build/plugin/index.js",
-    "./plugin": "./build/plugin/index.js",
-    "./runtime": "./build/runtime/index.js",
-    "./runtime/styles": "./build/runtime/index.css",
+    ".": {
+      "node": "./build/plugin/index-node.js",
+      "default": "./build/plugin/index.js"
+    },
+    "./plugin": {
+      "node": "./build/plugin/index-node.js",
+      "default": "./build/plugin/index.js"
+    },
+    "./runtime": {
+      "node": "./build/runtime/index-node.js",
+      "default": "./build/runtime/index.js"
+    },
+    "./runtime/styles": "./build/runtime/index-node.css",
     "./react": "./build/react/index.js",
     "./hooks": "./build/react/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "index.d.ts": [
+        "./build/plugin/index.d.ts"
+      ],
+      "plugin": [
+        "./build/plugin/index.d.ts"
+      ],
+      "runtime": [
+        "./build/runtime/index.d.ts"
+      ]
+    }
   },
   "scripts": {
     "build": "run-p build:*",

@@ -12,20 +12,3 @@ export function hidden<B extends Record<string | symbol, unknown>, F extends str
 
     return box as B & {[P in F]: V};
 }
-
-export function copy(from: string, to: string) {
-    const {mkdirSync, copyFileSync} = dynrequire('node:fs');
-    const {dirname} = dynrequire('node:path');
-
-    mkdirSync(dirname(to), {recursive: true});
-    copyFileSync(from, to);
-}
-
-/*
- * Runtime require hidden for builders.
- * Used for nodejs api
- */
-export function dynrequire(module: string) {
-    // eslint-disable-next-line no-eval
-    return eval(`require('${module}')`);
-}

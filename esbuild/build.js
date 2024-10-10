@@ -15,11 +15,8 @@ const common = {
 };
 
 (async () => {
-    const runtime = await esbuild.build({
-        ...common,
+    const runtimeCommon = {
         entryPoints: ['src/runtime/index.ts'],
-        outfile: 'build/runtime/index.js',
-        minify: true,
         loader: {
             '.svg': 'text',
             '.ttf': 'file',
@@ -27,7 +24,22 @@ const common = {
             '.woff2': 'file',
         },
         plugins: [inlineScss()],
+    };
+
+    const runtime = await esbuild.build({
+        ...common,
+        ...runtimeCommon,
+        outfile: 'build/runtime/index-node.js',
+        minify: true,
         metafile: true,
+    });
+
+    esbuild.build({
+        ...common,
+        ...runtimeCommon,
+        outfile: 'build/runtime/index.js',
+        external: ['katex'],
+        platform: 'neutral',
     });
 
     esbuild.build({
@@ -38,11 +50,7 @@ const common = {
         external: ['react'],
     });
 
-    esbuild.build({
-        ...common,
-        entryPoints: ['src/plugin/index.ts'],
-        outfile: 'build/plugin/index.js',
-        platform: 'node',
+    const pluginCommon = {
         external: ['markdown-it', 'node:*'],
         define: {
             PACKAGE: JSON.stringify(require('../package.json').name),
@@ -52,5 +60,22 @@ const common = {
                     .map((file) => file.replace(/^runtime\//, '')),
             ),
         },
+    };
+
+    esbuild.build({
+        ...common,
+        ...pluginCommon,
+        entryPoints: ['src/plugin/index.ts'],
+        outfile: 'build/plugin/index.js',
+        platform: 'neutral',
+        external: [...pluginCommon.external, 'katex'],
+    });
+
+    esbuild.build({
+        ...common,
+        ...pluginCommon,
+        entryPoints: ['src/plugin/index-node.ts'],
+        outfile: 'build/plugin/index-node.js',
+        platform: 'node',
     });
 })();

@@ -5,10 +5,12 @@ import type {
 import type {RuleBlock} from 'markdown-it/lib/parser_block';
 import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
-import type {KatexOptions} from 'katex';
-import type MarkdownIt from 'markdown-it';
+import type {NormalizedPluginOptions, PluginOptions} from './types';
 
-import {copy, dynrequire, hidden} from './utils';
+import MarkdownIt from 'markdown-it';
+import katex from 'katex';
+
+import {hidden} from './utils';
 
 // Assumes that there is a "$" at state.src[pos]
 function isValidDelim(state: Parameters<RuleInline>[0], pos: number) {
@@ -178,8 +180,9 @@ const registerTransforms = (
     {
         runtime,
         bundle,
+        onBundle,
         output,
-    }: Pick<NormalizedPluginOptions, 'bundle' | 'runtime'> & {
+    }: Pick<NormalizedPluginOptions, 'bundle' | 'onBundle' | 'runtime'> & {
         output: string;
     },
 ) => {
@@ -200,26 +203,8 @@ const registerTransforms = (
                 env.meta.style = env.meta.style || [];
                 env.meta.style.push(runtime.style);
 
-                if (bundle && !env.bundled.has(PACKAGE)) {
-                    const {dirname, join} = dynrequire('node:path');
-
-                    env.bundled.add(PACKAGE);
-
-                    const root = dirname(require.resolve(join(PACKAGE, 'runtime')));
-
-                    RUNTIME.forEach((file) => {
-                        switch (true) {
-                            case file === 'index.js':
-                                return copy(join(root, file), join(output, runtime.script));
-                            case file === 'index.css':
-                                return copy(join(root, file), join(output, runtime.style));
-                            default:
-                                return copy(
-                                    join(root, file),
-                                    join(output, dirname(runtime.script), file),
-                                );
-                        }
-                    });
+                if (bundle && !env.bundled.has(PACKAGE) && onBundle) {
+                    onBundle(env, output, runtime);
                 }
             }
 
@@ -233,32 +218,18 @@ const registerTransforms = (
     });
 };
 
-export type NormalizedPluginOptions = Omit<PluginOptions, 'runtime'> & {
-    runtime: {
-        script: string;
-        style: string;
-    };
-};
-
-export type PluginOptions = {
-    runtime:
-        | string
-        | {
-              script: string;
-              style: string;
-          };
-    bundle: boolean;
-    validate: boolean;
-    classes: string;
-    katexOptions: KatexOptions;
-};
-
 type InputOptions = MarkdownItPluginOpts & {
     destRoot: string;
 };
 
 export function transform(options: Partial<PluginOptions> = {}) {
-    const {classes = 'yfm-latex', bundle = true, validate = true, katexOptions = {}} = options;
+    const {
+        classes = 'yfm-latex',
+        bundle = true,
+        validate = true,
+        katexOptions = {},
+        onBundle,
+    } = options;
 
     if (bundle && typeof options.runtime === 'string') {
         throw new TypeError('Option `runtime` should be record when `bundle` is enabled.');
@@ -282,7 +253,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             };
 
             if (validate) {
-                dynrequire('katex').renderToString(content, {
+                katex.renderToString(content, {
                     ...options,
                     throwOnError: false,
                 });
@@ -299,6 +270,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             runtime,
             bundle,
             output,
+            onBundle,
         });
 
         md.renderer.rules.math_inline = render('span', false);
@@ -307,12 +279,12 @@ export function transform(options: Partial<PluginOptions> = {}) {
 
     Object.assign(plugin, {
         collect(input: string, {destRoot = '.'}: InputOptions) {
-            const MdIt = dynrequire('markdown-it');
-            const md = new MdIt().use((md: MarkdownIt) => {
+            const md = new MarkdownIt().use((md) => {
                 registerTransforms(md, {
                     runtime,
                     bundle,
                     output: destRoot,
+                    onBundle,
                 });
             });
 
