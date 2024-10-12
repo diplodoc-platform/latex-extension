@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.2.0...v1.3.0) (2024-10-12)
+
+
+### chore
+
+* release 1.3.0 ([4abb647](https://github.com/diplodoc-platform/latex-extension/commit/4abb6471b94b0f985e55c316131a7910d2a60ff5))
+
 ## [1.2.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.1.0...v1.2.0) (2024-10-03)
 
 
