@@ -29,7 +29,7 @@ const common = {
     const runtime = await esbuild.build({
         ...common,
         ...runtimeCommon,
-        outfile: 'build/runtime/index-node.js',
+        outfile: 'build/runtime/index.js',
         minify: true,
         metafile: true,
     });
@@ -37,7 +37,7 @@ const common = {
     esbuild.build({
         ...common,
         ...runtimeCommon,
-        outfile: 'build/runtime/index.js',
+        outfile: 'build/runtime/index-browser.js',
         external: ['katex'],
         platform: 'neutral',
     });

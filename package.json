@@ -14,10 +14,10 @@
       "default": "./build/plugin/index.js"
     },
     "./runtime": {
-      "node": "./build/runtime/index-node.js",
-      "default": "./build/runtime/index.js"
+      "node": "./build/runtime/index.js",
+      "default": "./build/runtime/index-browser.js"
     },
-    "./runtime/styles": "./build/runtime/index-node.css",
+    "./runtime/styles": "./build/runtime/index.css",
     "./react": "./build/react/index.js",
     "./hooks": "./build/react/index.js"
   },
