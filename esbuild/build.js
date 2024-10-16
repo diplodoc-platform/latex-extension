@@ -57,7 +57,7 @@ const common = {
             RUNTIME: JSON.stringify(
                 Object.keys(runtime.metafile.outputs)
                     .filter((file) => !file.match(/\.map$/))
-                    .map((file) => file.replace(/^runtime\//, '')),
+                    .map((file) => file.replace(/^build\/runtime\//, '')),
             ),
         },
     };
