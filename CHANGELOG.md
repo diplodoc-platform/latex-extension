@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.0...v1.3.1) (2024-10-19)
+
+
+### Bug Fixes
+
+* Fix bundled assets ([2ae4890](https://github.com/diplodoc-platform/latex-extension/commit/2ae48900a6d0ecbcb9adafd1d12f58519abd9b49))
+
 ## [1.3.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.2.0...v1.3.0) (2024-10-12)
 
 
