@@ -13,7 +13,7 @@ function copy(from: string, to: string) {
 export function onBundle(env: {bundled: Set<string>}, output: string, runtime: RuntimeObj) {
     env.bundled.add(PACKAGE);
 
-    const root = join(__dirname, '..', 'runtime');
+    const root = dirname(require.resolve(join(PACKAGE, 'runtime')));
 
     RUNTIME.forEach((file) => {
         switch (true) {
