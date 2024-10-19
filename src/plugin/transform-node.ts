@@ -13,7 +13,7 @@ function copy(from: string, to: string) {
 export function onBundle(env: {bundled: Set<string>}, output: string, runtime: RuntimeObj) {
     env.bundled.add(PACKAGE);
 
-    const root = dirname(require.resolve(join(PACKAGE, 'runtime')));
+    const root = join(__dirname, '..', 'runtime');
 
     RUNTIME.forEach((file) => {
         switch (true) {
@@ -27,6 +27,6 @@ export function onBundle(env: {bundled: Set<string>}, output: string, runtime: R
     });
 }
 
-export const transform = (options?: Partial<PluginOptions>) => {
-    return baseTransform(options);
+export const transform = (options?: Partial<Omit<PluginOptions, 'onBundle'>>) => {
+    return baseTransform({...options, onBundle});
 };
