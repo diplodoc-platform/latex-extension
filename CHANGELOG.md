@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.2...v1.3.3) (2025-02-14)
+
+
+### Dependency update
+
+* Update peer deps react range ([64fecc0](https://github.com/diplodoc-platform/latex-extension/commit/64fecc0c61631d1d0c729869667798f0f3dde260))
+
 ## [1.3.2](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.1...v1.3.2) (2024-10-19)
 
 
