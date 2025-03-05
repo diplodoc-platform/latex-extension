@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.3...v1.3.4) (2025-03-05)
+
+
+### Bug Fixes
+
+* add types to `exports` ([30b9312](https://github.com/diplodoc-platform/latex-extension/commit/30b931263a54933f6610db72345068eecfa49d89))
+
 ## [1.3.3](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.2...v1.3.3) (2025-02-14)
 
 
