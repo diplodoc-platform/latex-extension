@@ -6,14 +6,17 @@
   "types": "build/plugin/index.d.ts",
   "exports": {
     ".": {
+      "types": "./build/plugin/index.d.ts",
       "node": "./build/plugin/index-node.js",
       "default": "./build/plugin/index.js"
     },
     "./plugin": {
+      "types": "./build/plugin/index.d.ts",
       "node": "./build/plugin/index-node.js",
       "default": "./build/plugin/index.js"
     },
     "./runtime": {
+      "types": "./build/runtime/index.d.ts",
       "node": "./build/runtime/index.js",
       "default": "./build/runtime/index-browser.js"
     },
