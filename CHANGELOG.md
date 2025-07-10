@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.4...v1.4.0) (2025-07-10)
+
+
+### Features
+
+* **plugin:** render all token attrs ([a6803a0](https://github.com/diplodoc-platform/latex-extension/commit/a6803a0ce9e212da250015dbe53b010aabbdda7a))
+
 ## [1.3.4](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.3...v1.3.4) (2025-03-05)
 
 
