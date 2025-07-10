@@ -245,8 +245,9 @@ export function transform(options: Partial<PluginOptions> = {}) {
 
     const render =
         (tag: 'span' | 'p', displayMode: boolean): RenderRule =>
-        (tokens, idx) => {
-            const content = tokens[idx].content;
+        (tokens, idx, _options, _env, self) => {
+            const token = tokens[idx];
+            const content = token.content;
             const options = {
                 ...katexOptions,
                 displayMode,
@@ -262,7 +263,13 @@ export function transform(options: Partial<PluginOptions> = {}) {
             const econtent = encodeURIComponent(content);
             const eoptions = encodeURIComponent(JSON.stringify(options));
 
-            return `<${tag} class="${classes}" data-content="${econtent}" data-options="${eoptions}"></${tag}>`;
+            const ignoredAttrs = new Set(['class', 'data-content', 'data-options']);
+            // fake token for render attrs
+            const attrsToken: Pick<MarkdownIt.Token, 'attrs'> = {
+                attrs: token.attrs?.filter(([name]) => !ignoredAttrs.has(name)) || null,
+            };
+
+            return `<${tag} class="${classes}" data-content="${econtent}" data-options="${eoptions}"${self.renderAttrs(attrsToken as MarkdownIt.Token)}></${tag}>`;
         };
 
     const plugin: MarkdownItPluginCb<{output: string}> = function (md: MarkdownIt, {output = '.'}) {
