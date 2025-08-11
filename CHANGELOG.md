@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/diplodoc-platform/latex-extension/compare/v1.4.0...v1.4.1) (2025-08-11)
+
+
+### Bug Fixes
+
+* update version actions, node 22 ([36870e5](https://github.com/diplodoc-platform/latex-extension/commit/36870e54ca483f00306320e1f1a3cb4a532cc3e1))
+
 ## [1.4.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.3.4...v1.4.0) (2025-07-10)
 
 
