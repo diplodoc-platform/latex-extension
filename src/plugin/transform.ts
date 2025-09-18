@@ -1,7 +1,3 @@
-import type {
-    MarkdownItPluginCb,
-    MarkdownItPluginOpts,
-} from '@diplodoc/transform/lib/plugins/typings';
 import type {RuleBlock} from 'markdown-it/lib/parser_block';
 import type {RuleInline} from 'markdown-it/lib/parser_inline';
 import type {RenderRule} from 'markdown-it/lib/renderer';
@@ -218,10 +214,6 @@ const registerTransforms = (
     });
 };
 
-type InputOptions = MarkdownItPluginOpts & {
-    destRoot: string;
-};
-
 export function transform(options: Partial<PluginOptions> = {}) {
     const {
         classes = 'yfm-latex',
@@ -272,7 +264,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             return `<${tag} class="${classes}" data-content="${econtent}" data-options="${eoptions}"${self.renderAttrs(attrsToken as MarkdownIt.Token)}></${tag}>`;
         };
 
-    const plugin: MarkdownItPluginCb<{output: string}> = function (md: MarkdownIt, {output = '.'}) {
+    const plugin = function (md: MarkdownIt, {output = '.'}: {output: string}) {
         registerTransforms(md, {
             runtime,
             bundle,
@@ -285,7 +277,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
     };
 
     Object.assign(plugin, {
-        collect(input: string, {destRoot = '.'}: InputOptions) {
+        collect(input: string, {destRoot = '.'}: {destRoot: string}) {
             const md = new MarkdownIt().use((md) => {
                 registerTransforms(md, {
                     runtime,
