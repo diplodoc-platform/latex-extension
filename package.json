@@ -4,6 +4,10 @@
   "description": "Extension for Diplodoc platform which adds support for Latex syntax using Katex",
   "main": "build/plugin/index.js",
   "types": "build/plugin/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:diplodoc-platform/latex-extension.git"
+  },
   "exports": {
     ".": {
       "types": "./build/plugin/index.d.ts",
