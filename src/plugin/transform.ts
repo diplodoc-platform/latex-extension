@@ -241,6 +241,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
             const token = tokens[idx];
             const content = token.content;
             const options = {
+                strict: false,
                 ...katexOptions,
                 displayMode,
             };
