@@ -43,7 +43,7 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:js": "./esbuild/build.js",
+    "build:js": "node ./esbuild/build.js",
     "build:declarations": "tsc --emitDeclarationOnly --outDir ./build",
     "prepublishOnly": "npm run build",
     "test": "exit 0",
