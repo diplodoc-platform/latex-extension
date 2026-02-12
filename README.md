@@ -1,16 +1,24 @@
-# Diplodoc Latex extension
-
 [![NPM version](https://img.shields.io/npm/v/@diplodoc/latex-extension.svg?style=flat)](https://www.npmjs.org/package/@diplodoc/latex-extension)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_latex-extension&metric=alert_status)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_latex-extension)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_latex-extension&metric=coverage)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_latex-extension)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_latex-extension&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_latex-extension)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_latex-extension&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_latex-extension)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_latex-extension&metric=security_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_latex-extension)
+
+# Diplodoc Latex extension
 
 This is extension for Diplodoc platform which adds support for Latex syntax using [katex](https://katex.org/) library.
 
 Extension contains some parts:
+
 - [Prepared Katex runtime](#prepared-katex-runtime)
 - [MarkdownIt transform plugin](#markdownit-transform-plugin)
 - [React hook and component for smart control of Katex](#react-hook-and-component-for-smart-control-of-katex)
 
 ## Quickstart
+
 Install the package
+
 ```bash
 npm install --save @diplodoc/latex-extension
 ```
@@ -21,7 +29,8 @@ Attach plugin to transformer
 import latex from '@diplodoc/latex-extension';
 import transform from '@diplodoc/transform';
 
-const {result} = await transform(`
+const {result} = await transform(
+  `
 ### Inline latex
 
 Some text $c = \pm\sqrt{a^2 + b^2}$
@@ -31,34 +40,34 @@ Some text $c = \pm\sqrt{a^2 + b^2}$
 $$
 c = \pm\sqrt{a^2 + b^2}
 $$
-`, {
-    plugins: [
-        latex.transform()
-    ]
-});
+`,
+  {
+    plugins: [latex.transform()],
+  },
+);
 ```
 
 Add latex runtime to your final page
 
 ```html
 <html>
-    <head>
-        <link rel="stylesheet" href="_assets/latex-extension.css" />
-        <!-- Read more about '_assets/latex-extension.js' in 'MarkdownIt transform plugin' section -->
-        <script src="_assets/latex-extension.js" async />
-        <script>
-            // Read more about 'latexJsonp' in 'Prepared Katex runtime' section
-            window.latexJsonp = window.latexJsonp || [];
-            window.latexJsonp.push((latex) => {
-                window.addEventListener('load', function() {
-                    latex.run();
-                });
-            });
-        </script>
-    </head>
-    <body style="background: #000">
-        ${result.html}
-    </body>
+  <head>
+    <link rel="stylesheet" href="_assets/latex-extension.css" />
+    <!-- Read more about '_assets/latex-extension.js' in 'MarkdownIt transform plugin' section -->
+    <script src="_assets/latex-extension.js" async />
+    <script>
+      // Read more about 'latexJsonp' in 'Prepared Katex runtime' section
+      window.latexJsonp = window.latexJsonp || [];
+      window.latexJsonp.push((latex) => {
+        window.addEventListener('load', function () {
+          latex.run();
+        });
+      });
+    </script>
+  </head>
+  <body style="background: #000">
+    ${result.html}
+  </body>
 </html>
 ```
 
@@ -73,24 +82,27 @@ The most expected behavior is loading it asynchronously.
 We add `latexJsonp` global callback to handle Katex loading.
 
 Also, we limit exposed Katex API by next methods:
+
 - **run(options: [KatexOptions](https://katex.org/docs/options) & [RunOptions](#run-options))** - start formula rendering
 
 Usage example:
+
 ```js
 window.latexJsonp = window.latexJsonp || [];
 
 // This callback will be called when runtime is loaded
 window.latexJsonp.push((latex) => {
-    latex.run();
+  latex.run();
 });
 
 // You can configure more that one callback
 window.latexJsonp.push((latex) => {
-    console.log('Render diagrams');
+  console.log('Render diagrams');
 });
 ```
 
 ### Run options
+
 - `querySelector` - The query selector to use when finding elements to render.<br>
   (Default: `.yfm-latex`)<br>
 
@@ -100,6 +112,7 @@ window.latexJsonp.push((latex) => {
   (Default: `identity`)<br>
 
 ### Security
+
 By default runtime uses Katex [security recomendations](https://katex.org/docs/security).<br>
 But there is extra option for extended sanitize. You feel free to use your own sanitizer:
 
@@ -109,9 +122,11 @@ import domready from 'domready';
 
 window.latexJsonp = window.latexJsonp || [];
 window.latexJsonp.push((latex) => {
-    domready(() => latex.run({
-        sanitize: dompurify.sanitize
-    }));
+  domready(() =>
+    latex.run({
+      sanitize: dompurify.sanitize,
+    }),
+  );
 });
 ```
 
@@ -120,9 +135,11 @@ window.latexJsonp.push((latex) => {
 Plugin for [@diplodoc/transform](https://github.com/diplodoc-platform/transform) package.
 
 Configuration:
+
 - `runtime` - name of runtime script which will be exposed in results `script` and `style` sections.<br>
   If `bundle` option was disabled then can be plain string. Otherwise should be string record.<br/>
   **Default**:
+
   ```json
   {
     "script": "_assets/latex-extension.js",
@@ -150,46 +167,50 @@ Configuration:
 Simplifies Katex control with react
 
 ```tsx
-import React from 'react'
-import { transform } from '@diplodoc/transform'
-import latex from '@diplodoc/latex-extension/plugin'
-import { LatexRuntime } from '@diplodoc/latex-extension/react'
+import React from 'react';
+import {transform} from '@diplodoc/transform';
+import latex from '@diplodoc/latex-extension/plugin';
+import {LatexRuntime} from '@diplodoc/latex-extension/react';
 
 const LATEX_RUNTIME = 'extension:latex';
 
-const Doc: React.FC = ({ content }) => {
-    const result = transform(content, {
-      plugins: [
-        // Initialize plugin for client/server rendering
-        latex.transform({
-          // Do not touch file system
-          bundle: false,
-          // Set custom runtime name for searching in result scripts
-          runtime: LATEX_RUNTIME
-        })
-      ]
-    })
+const Doc: React.FC = ({content}) => {
+  const result = transform(content, {
+    plugins: [
+      // Initialize plugin for client/server rendering
+      latex.transform({
+        // Do not touch file system
+        bundle: false,
+        // Set custom runtime name for searching in result scripts
+        runtime: LATEX_RUNTIME,
+      }),
+    ],
+  });
 
-    // Load katex only if one or more formulas should be rendered
-    if (result.script.includes(LATEX_RUNTIME)) {
-      import('@diplodoc/latex-extension/runtime')
-    }
+  // Load katex only if one or more formulas should be rendered
+  if (result.script.includes(LATEX_RUNTIME)) {
+    import('@diplodoc/latex-extension/runtime');
+  }
 
-    if (result.style.includes(LATEX_RUNTIME)) {
-      import('@diplodoc/latex-extension/runtime/styles')
-    }
+  if (result.style.includes(LATEX_RUNTIME)) {
+    import('@diplodoc/latex-extension/runtime/styles');
+  }
 
-    return <div dangerouslySetInnerHTML={{ __html: result.html }} />
-}
+  return <div dangerouslySetInnerHTML={{__html: result.html}} />;
+};
 
-export const App: React.FC = ({ theme }) => {
-    return <>
-        <Doc content={`
+export const App: React.FC = ({theme}) => {
+  return (
+    <>
+      <Doc
+        content={`
             $$
             c = \pm\sqrt{a^2 + b^2}
             $$
-        `}/>
-        <KatexRuntime />
+        `}
+      />
+      <KatexRuntime />
     </>
-}
+  );
+};
 ```
