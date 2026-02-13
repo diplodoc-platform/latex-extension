@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-const esbuild = require('@diplodoc/lint/esbuild');
-const {inlineScss} = require('esbuild-inline-sass');
+const {build, sassPlugin} = require('@diplodoc/lint/esbuild');
 
 const {
     compilerOptions: {target},
@@ -12,6 +11,7 @@ const common = {
     sourcemap: true,
     target: target,
     tsconfig: './tsconfig.json',
+    plugins: [sassPlugin()],
 };
 
 (async () => {
@@ -23,10 +23,9 @@ const common = {
             '.woff': 'file',
             '.woff2': 'file',
         },
-        plugins: [inlineScss()],
     };
 
-    const runtime = await esbuild.build({
+    const runtime = await build({
         ...common,
         ...runtimeCommon,
         outfile: 'build/runtime/index.js',
@@ -34,7 +33,7 @@ const common = {
         metafile: true,
     });
 
-    esbuild.build({
+    build({
         ...common,
         ...runtimeCommon,
         outfile: 'build/runtime/index-browser.js',
@@ -42,7 +41,7 @@ const common = {
         platform: 'neutral',
     });
 
-    esbuild.build({
+    build({
         ...common,
         entryPoints: ['src/react/index.ts'],
         outfile: 'build/react/index.js',
@@ -62,7 +61,7 @@ const common = {
         },
     };
 
-    esbuild.build({
+    build({
         ...common,
         ...pluginCommon,
         entryPoints: ['src/plugin/index.ts'],
@@ -71,7 +70,7 @@ const common = {
         external: [...pluginCommon.external, 'katex'],
     });
 
-    esbuild.build({
+    build({
         ...common,
         ...pluginCommon,
         entryPoints: ['src/plugin/index-node.ts'],
