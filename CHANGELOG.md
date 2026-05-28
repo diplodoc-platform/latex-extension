@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.4.1...v2.0.0) (2026-05-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update to infra 1.14.0
+
+### Bug Fixes
+
+* **deps:** updated node to 24 ([9d7e01f](https://github.com/diplodoc-platform/latex-extension/commit/9d7e01fb66b55d664eb26bcea8038bc5db63b38d))
+* Update infra to 1.13.2 ([8799b77](https://github.com/diplodoc-platform/latex-extension/commit/8799b77c287974f959355e99d6bd4fcea129a89e))
+* Update to infra 1.14.0 ([58664e6](https://github.com/diplodoc-platform/latex-extension/commit/58664e6f4ef9d72ba15dee426e9ef0276a8bda00))
+
 ## [1.4.1](https://github.com/diplodoc-platform/latex-extension/compare/v1.4.0...v1.4.1) (2025-11-24)
 
 
