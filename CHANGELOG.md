@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/diplodoc-platform/latex-extension/compare/v2.0.0...v2.0.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* update react ([97c0ccd](https://github.com/diplodoc-platform/latex-extension/commit/97c0ccd911aef4308b56192c74179c6b393e160e))
+
 ## [2.0.0](https://github.com/diplodoc-platform/latex-extension/compare/v1.4.1...v2.0.0) (2026-05-28)
 
 
