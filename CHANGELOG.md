@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2](https://github.com/diplodoc-platform/latex-extension/compare/v2.0.1...v2.0.2) (2026-08-06)
+
+
+### Bug Fixes
+
+* Upgrade typescript to 5.9.3 DOCSTOOLS-6357 ([2a27767](https://github.com/diplodoc-platform/latex-extension/commit/2a2776708457075979356937c0b41252a7534a53))
+* Upgrade typescript to 6.0.3 DOCSTOOLS-6359 ([00017bf](https://github.com/diplodoc-platform/latex-extension/commit/00017bf72fa84822871a9a5092a795e81ba20692))
+
 ## [2.0.1](https://github.com/diplodoc-platform/latex-extension/compare/v2.0.0...v2.0.1) (2026-07-21)
 
 
