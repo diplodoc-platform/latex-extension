@@ -1,6 +1,10 @@
-import type {RuleBlock} from 'markdown-it/lib/parser_block';
-import type {RuleInline} from 'markdown-it/lib/parser_inline';
-import type {RenderRule} from 'markdown-it/lib/renderer';
+import type {
+    Env,
+    MarkdownIt as MarkdownItParser,
+    RendererRule,
+    StateBlock,
+    StateInline,
+} from 'markdown-it';
 import type {NormalizedPluginOptions, PluginOptions} from './types';
 
 import MarkdownIt from 'markdown-it';
@@ -8,8 +12,10 @@ import katex from 'katex';
 
 import {hidden} from './utils';
 
+type LatexEnv = Env & {meta?: {script?: string[]; style?: string[]}};
+
 // Assumes that there is a "$" at state.src[pos]
-function isValidDelim(state: Parameters<RuleInline>[0], pos: number) {
+function isValidDelim(state: StateInline, pos: number) {
     const result = {
         canOpen: true,
         canClose: true,
@@ -34,7 +40,7 @@ function isValidDelim(state: Parameters<RuleInline>[0], pos: number) {
     return result;
 }
 
-const mathInline: RuleInline = (state, silent) => {
+function mathInline(state: StateInline, silent: boolean) {
     if (state.src[state.pos] !== '$') {
         return false;
     }
@@ -106,9 +112,9 @@ const mathInline: RuleInline = (state, silent) => {
     state.pos = match + 1;
 
     return true;
-};
+}
 
-const mathBlock: RuleBlock = (state, start, end, silent) => {
+function mathBlock(state: StateBlock, start: number, end: number, silent: boolean) {
     let found = false;
     let pos = state.bMarks[start] + state.tShift[start];
     let max = state.eMarks[start];
@@ -169,10 +175,10 @@ const mathBlock: RuleBlock = (state, start, end, silent) => {
     token.markup = '$$';
 
     return true;
-};
+}
 
 const registerTransforms = (
-    md: MarkdownIt,
+    md: MarkdownItParser,
     {
         runtime,
         bundle,
@@ -182,14 +188,11 @@ const registerTransforms = (
         output: string;
     },
 ) => {
-    function applyTransforms<T extends RuleBlock | RuleInline>(match: T): T {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return ((state: Parameters<T>[0], ...args: any[]) => {
-            const {env} = state;
-
-            hidden(env, 'bundled', new Set<string>());
-
-            // @ts-ignore
+    function applyTransforms<State extends StateBlock | StateInline, Args extends unknown[]>(
+        match: (state: State, ...args: Args) => boolean,
+    ) {
+        return (state: State, ...args: Args) => {
+            const env = hidden(state.env as LatexEnv, 'bundled', new Set<string>());
             const matched = match(state, ...args);
 
             if (matched) {
@@ -205,7 +208,7 @@ const registerTransforms = (
             }
 
             return matched;
-        }) as T;
+        };
     }
 
     md.inline.ruler.after('escape', 'math_inline', applyTransforms(mathInline));
@@ -236,7 +239,7 @@ export function transform(options: Partial<PluginOptions> = {}) {
               };
 
     const render =
-        (tag: 'span' | 'p', displayMode: boolean): RenderRule =>
+        (tag: 'span' | 'p', displayMode: boolean): RendererRule =>
         (tokens, idx, _options, _env, self) => {
             const token = tokens[idx];
             const content = token.content;
@@ -257,15 +260,14 @@ export function transform(options: Partial<PluginOptions> = {}) {
             const eoptions = encodeURIComponent(JSON.stringify(options));
 
             const ignoredAttrs = new Set(['class', 'data-content', 'data-options']);
-            // fake token for render attrs
-            const attrsToken: Pick<MarkdownIt.Token, 'attrs'> = {
+            const attrsToken = {
                 attrs: token.attrs?.filter(([name]) => !ignoredAttrs.has(name)) || null,
             };
 
-            return `<${tag} class="${classes}" data-content="${econtent}" data-options="${eoptions}"${self.renderAttrs(attrsToken as MarkdownIt.Token)}></${tag}>`;
+            return `<${tag} class="${classes}" data-content="${econtent}" data-options="${eoptions}"${self.renderAttrs(attrsToken)}></${tag}>`;
         };
 
-    const plugin = function (md: MarkdownIt, {output = '.'}: {output: string}) {
+    const plugin = function (md: MarkdownItParser, {output = '.'}: {output: string}) {
         registerTransforms(md, {
             runtime,
             bundle,
