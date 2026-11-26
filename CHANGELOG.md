@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/diplodoc-platform/latex-extension/compare/v2.0.2...v3.0.0) (2026-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **markdown-it:** Markdown-it 15.0.3 or later in major version 15 is required.
+
+### Features
+
+* **markdown-it:** require Markdown-it 15 ([641f2b0](https://github.com/diplodoc-platform/latex-extension/commit/641f2b0f13f2c8650358c31c321ae407048ab590))
+
 ## [2.0.2](https://github.com/diplodoc-platform/latex-extension/compare/v2.0.1...v2.0.2) (2026-08-06)
 
 
